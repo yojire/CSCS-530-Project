@@ -13,32 +13,37 @@ _Ruikun Xiao_
 ### Goal 
 *****
  
-_This model is proposed for preliminary investigation into bottom-up information aggregation processes in bureaucratic systems._
+_This model is proposed for preliminary investigation into bottom-up information aggregation processes in bureaucratic systems. (If possible, I would also like to further complicate the model to simulate how top-down orders are executed.)_
 
 &nbsp;  
 ### Justification
 ****
-_Modern bureaucratic systems are typical hierarchical organizations with especially heterogenous members (specialized bureaucrats, with diverged standpoints and different access to information) and complex interactional structures. Therefore, ABM is an important approach to study the collective outcomes produced._
+
+_Typically, modern bureaucratic systems are hierarchical organizations with especially heterogenous members (specialized bureaucrats, with diverged standpoints and different access to information) and complex interactional structures. Therefore, ABM is an important approach to look into how they function, and how collective outcomes are produced._
 
 &nbsp; 
 ### Main Micro-level Processes and Macro-level Dynamics of Interest
 ****
 
-_Short overview of the key processes and/or relationships you are interested in using your model to explore. Will likely be something regarding emergent behavior that arises from individual interactions_
+_In the highly symplified model, for each step, a bureaucratic system is going to learn a latent binary variable X by investigating into several observable variables which are correlated with the variable of interest._
+
+_Only terminal agents in the hierarchy have direct access to these observables and are then able to report their observations. However, they may distort their observations, or even collude to meet their diverged standpoints. (With personnel changes and interactions, the network structure also evolves as time goes by.)_
+
+_Supervisors in the system do not have direct access to the observables, but they receive reports from inferior agents, with which they do simple statistical analyses and report what they learn through these analyses. They may identify and kick out cheaters, or become cheaters themselves._
+
+_Finally, with all the information aggregated, a decision would be made about the latent variable for each step. With different configurations of parameters, different overall outcomes would be produced, and the system may also evolve in different ways._
 
 &nbsp; 
-
 
 ## Model Outline
 ****
+
+Here I would only present the simplest version, where there is only one supervisor for all terminal agents. It should not be hard to extend the model.
+
 &nbsp; 
 ### 1) Environment
-_Description of the environment in your model. Things to specify *if they apply*:_
 
-* _Boundary conditions (e.g. wrapping, infinite, etc.)_
-* _Dimensionality (e.g. 1D, 2D, etc.)_
-* _List of environment-owned variables (e.g. resources, states, roughness)_
-* _List of environment-owned methods/procedures (e.g. resource production, state change, etc.)_
+_There are generally three_
 
 
 ```python
@@ -52,11 +57,15 @@ _Description of the environment in your model. Things to specify *if they apply*
 
 ### 2) Agents
  
- _Description of the "agents" in the system. Things to specify *if they apply*:_
+ _Every agent in our model corresponds to a bureaucrat in the hierarchy. Though there are different types of agents for different positions in the hierarchy, they are all assumed to be Bayesian rational, or at least partially Bayesian rational. For the simplest version, there are only two classes of agents._
  
-* _List of agent-owned variables (e.g. age, heading, ID, etc.)_
-* _List of agent-owned methods/procedures (e.g. move, consume, reproduce, die, etc.)_
+_For the supervisor, we have:_
+* _Supervisor-owned variables: bias, suspicion, tolerance._
+* _Supervisor-owned methods/procedures: analysis, penalty, self update_
 
+_For terminal agents, we have:_
+* _Terminal-owned variables: outcome preference (for this version, a fixed binary value), sophistication, subjective distributions of environment parameters and supervisor-owned variables, knowledge of some other terminals' preferences._
+* _Terminal-owned methods/procedures: observe, learn preference, develop companionship, communicate, report_
 
 ```python
 # Include first pass of the code you are thinking of using to construct your agents
@@ -71,7 +80,13 @@ _Description of the environment in your model. Things to specify *if they apply*
  
 **_Interaction Topology_**
 
-_Description of the topology of who interacts with whom in the system. Perfectly mixed? Spatial proximity? Along a network? CA neighborhood?_
+For the simplest version, we have a network structure with only one supervisor and several terminals. While there may be some initial structures, the network also evolves during our simulation.
+
+For each step, certain numbers of random dyadic interactions between terminals occur, during which terminals may come to learn another's outcome preferences (asymmetrically, sophisticated agents have better chances to learn their partners). Agents will also develop companionships with those identified to have the same preference, and share personal observations with these companions.
+
+With penalized terminals kicked out by the supervisor, and new terminals enrolled, the network also evolves.
+
+P.S. For simplicity, deceptions and betrayals are not considered here.
  
 **_Action Sequence_**
 
