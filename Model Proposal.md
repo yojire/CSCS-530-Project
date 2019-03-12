@@ -13,25 +13,25 @@ _Ruikun Xiao_
 ### Goal 
 *****
  
-_This model is proposed for preliminary investigation into bottom-up information aggregation processes in bureaucratic systems. (If possible, I would also like to further complicate the model to simulate how top-down orders are executed.)_
+This model is proposed for preliminary investigation into bottom-up information aggregation processes in bureaucratic systems. (If possible, I would also like to further complicate the model to simulate how top-down orders are executed.)
 
 &nbsp;  
 ### Justification
 ****
 
-_Typically, modern bureaucratic systems are hierarchical organizations with especially heterogenous members (specialized bureaucrats, with diverged standpoints and different access to information) and complex interactional structures. Therefore, ABM is an important approach to look into how they function, and how collective outcomes are produced._
+Typically, modern bureaucratic systems are hierarchical organizations with especially heterogenous members (specialized bureaucrats, with diverged standpoints and different access to information) and complex interactional structures. Therefore, ABM is an important approach to look into how they function, and how collective outcomes are produced.
 
 &nbsp; 
 ### Main Micro-level Processes and Macro-level Dynamics of Interest
 ****
 
-_In the highly symplified model, for each step, a bureaucratic system is going to learn a latent binary variable X by investigating into several observable variables which are correlated with the variable of interest._
+In the highly symplified model, for each step, a bureaucratic system is going to learn a latent binary variable X by investigating into several observable variables which are correlated with the variable of interest.
 
-_Only terminal agents in the hierarchy have direct access to these observables and are then able to report their observations. However, they may distort their observations, or even collude to meet their diverged standpoints. (With personnel changes and interactions, the network structure also evolves as time goes by.)_
+Only terminal agents in the hierarchy have direct access to these observables and are then able to report their observations. However, they may distort their observations, or even collude to meet their diverged standpoints. (With personnel changes and interactions, the network structure also evolves as time goes by.)
 
-_Supervisors in the system do not have direct access to the observables, but they receive reports from inferior agents, with which they do simple statistical analyses and report what they learn through these analyses. They may identify and kick out cheaters, or become cheaters themselves._
+Supervisors in the system do not have direct access to the observables, but they receive reports from inferior agents, with which they do simple statistical analyses and report what they learn through these analyses. They may identify and kick out cheaters, or become cheaters themselves.
 
-_Finally, with all the information aggregated, a decision would be made about the latent variable for each step. With different configurations of parameters, different overall outcomes would be produced, and the system may also evolve in different ways._
+Finally, with all the information aggregated, a decision would be made about the latent variable for each step. With different configurations of parameters, different overall outcomes would be produced, and the system may also evolve in different ways.
 
 &nbsp; 
 
@@ -57,15 +57,15 @@ _There are generally three_
 
 ### 2) Agents
  
- _Every agent in our model corresponds to a bureaucrat in the hierarchy. Though there are different types of agents for different positions in the hierarchy, they are all assumed to be Bayesian rational, or at least partially Bayesian rational. For the simplest version, there are only two classes of agents._
+Every agent in our model corresponds to a bureaucrat in the hierarchy. Though there are different types of agents for different positions in the hierarchy, they are all assumed to be Bayesian rational, or at least partially Bayesian rational. For the simplest version, there are only two classes of agents.
  
-_For the supervisor, we have:_
+For the supervisor, we have:
 * _Supervisor-owned variables: bias, suspicion, tolerance._
-* _Supervisor-owned methods/procedures: analysis, penalty, self update_
+* _Supervisor-owned methods/procedures: analysis, penalty, self update._
 
-_For terminal agents, we have:_
-* _Terminal-owned variables: outcome preference (for this version, a fixed binary value), sophistication, subjective distributions of environment parameters and supervisor-owned variables, knowledge of some other terminals' preferences._
-* _Terminal-owned methods/procedures: observe, learn preference, develop companionship, communicate, report_
+For terminal agents, we have:
+* _Terminal-owned variables: outcome preference (for this version, a fixed binary/trinary value), sophistication, subjective distributions of model parameters and supervisor-owned variables, knowledge of some other terminals' preferences._
+* _Terminal-owned methods/procedures: observe, learn preference, develop companionship, communicate, report, self update._
 
 ```python
 # Include first pass of the code you are thinking of using to construct your agents
@@ -86,15 +86,23 @@ For each step, certain numbers of random dyadic interactions between terminals o
 
 With penalized terminals kicked out by the supervisor, and new terminals enrolled, the network also evolves.
 
-P.S. For simplicity, deceptions and betrayals are not considered here.
+_P.S. For simplicity, deceptions and betrayals are not considered here._
  
 **_Action Sequence_**
 
-_What does an agent, cell, etc. do on a given turn? Provide a step-by-step description of what happens on a given turn for each part of your model_
+The following steps are conducted for each loop.
 
-1. Step 1
-2. Step 2
-3. Etc...
+1. A latent binary variable is generated.
+2. Each terminal conducts a single observation.
+3. Each terminal collects information from its neighboring terminals (companions), and produces a personal posterior distribution of the latent variable.
+4. With the help of the subjective distributions, each terminal proposes the extent to which observations should be distorted.
+5. After group discussions, each group of companions agrees on the extent.
+6. Each terminal reports a possibly distorted observation with randomness.
+7. The supervisor conducts some analyses to generate the decision. When anomalies are detected, the supervior kicks out the terminal with the greatest distortion beyond its tolerance.
+8. The supervisor updates its self-owned variables. If anomalies were detected before, its suspicion increases and tolerance decreases.
+9. A new terminals is enrolled if some one was kicked out.
+10. Some dyadic interactions between terminals occur, during which sophisticated terminals get knowledge about others. The pattern how these interactions occur can be manipulated.
+11. Each terminal updates its self-owned variables according to what has happened.
 
 &nbsp; 
 ### 4) Model Parameters and Initialization
