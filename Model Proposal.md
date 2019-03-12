@@ -43,14 +43,15 @@ Here I would only present the simplest version, where there is only one supervis
 &nbsp; 
 ### 1) Environment
 
-_There are generally three_
-
+For the environment, we have the network of those terminals (or we may say, companion groups). There is also a latent binary variable and a series of observables, which will all be generated every given turn.
 
 ```python
-# Include first pass of the code you are thinking of using to construct your environment
-# This may be a set of "patches-own" variables and a command in the "setup" procedure, a list, an array, or Class constructor
-# Feel free to include any patch methods/procedures you have. Filling in with pseudocode is ok! 
-# NOTE: If using Netlogo, remove "python" from the markdown at the top of this section to get a generic code block
+companion_groups = []
+
+def share_observation(groups) # Each agent shares its personal observation with its group members
+def distortion_negotiation(groups) # Each group negotiate and reach an agreement over the extent to which observations of its members should be distorted
+
+# The variables will be generated with the assumed joint distribution
 ```
 
 &nbsp; 
@@ -60,18 +61,28 @@ _There are generally three_
 Every agent in our model corresponds to a bureaucrat in the hierarchy. Though there are different types of agents for different positions in the hierarchy, they are all assumed to be Bayesian rational, or at least partially Bayesian rational. For the simplest version, there are only two classes of agents.
  
 For the supervisor, we have:
-* _Supervisor-owned variables: bias, suspicion, tolerance._
+* _Supervisor-owned variables: bias, suspicion, tolerance, reported._
 * _Supervisor-owned methods/procedures: analysis, penalty, self update._
 
 For terminal agents, we have:
-* _Terminal-owned variables: outcome preference (for this version, a fixed binary/trinary value), sophistication, subjective distributions of model parameters and supervisor-owned variables, knowledge of some other terminals' preferences._
-* _Terminal-owned methods/procedures: observe, learn preference, develop companionship, communicate, report, self update._
+* _Terminal-owned variables: id, corresponding observable, observation, aggregated observations, outcome preference (for this version, a fixed binary/trinary value), distortion proposal, sophistication, subjective distributions of model parameters and supervisor-owned variables, knowledge of some other terminals' preferences._
+* _Terminal-owned methods/procedures: observe, generate a distortion proposal, learn preference, develop companionship, report, self update._
 
 ```python
-# Include first pass of the code you are thinking of using to construct your agents
-# This may be a set of "turtle-own" variables and a command in the "setup" procedure, a list, an array, or Class constructor
-# Feel free to include any agent methods/procedures you have so far. Filling in with pseudocode is ok! 
-# NOTE: If using Netlogo, remove "python" from the markdown at the top of this section to get a generic code block
+class supervisor:
+    def __init__(self, ...)
+    def analysis(self) # Conduct a naive Bayesian analysis, and then try to detect any anomalies (with self.suspicion as the p-value).
+    def penalty(self, terminal_list) # When anomalies are detected, kick out the greatest cheater beyond self.tolerance
+    def self_update(self, decision, anomaly_detected) # Update self.bias with the output of method 'analysis'. If anomaly_detected is True, then update self.suspicion and self.tolerance as well.
+    
+class terminal:
+    def __init__(self, ...)
+    def observe(self)
+    def generate_distortion_proposal(self) # With the help of the subjective distributions
+    def report(self, supervisor)
+    def learn_preference(self, partner) # Learn the partner's preference by chance
+    def develop_companionship(self, partner, companion_groups) # Merge the group containing self and the one containing partner
+    def update(self) # Update the subjective distributions
 ```
 
 &nbsp; 
@@ -90,9 +101,30 @@ _P.S. For simplicity, deceptions and betrayals are not considered here._
  
 **_Action Sequence_**
 
-The following steps are conducted for each loop.
+Please refer to the next section.
 
-1. A latent binary variable is generated.
+&nbsp; 
+### 4) Model Parameters and Initialization
+
+Global parameters:
+
+* _The number of terminals (and correspondingly, the number of observables)._
+* _The joint distribution of the latent binary variable and the observables._
+* _The distribution of terminal preferences._
+* _The pattern of interaction occurences._
+* _Prior distributions of parameters and supervisor-owned variables for terminals._
+* _Analyses to be conducted by the supervisor (by default naive Bayesian analyis)._
+
+Initialization:
+
+1. Specify the parameters.
+2. Initialize a supervisor.
+3. Initialize a given number of terminals.
+4. Initialize some mutual knowledge and companionship among the terminals.
+
+The following steps are conducted for every given turn:
+
+1. Generate a latent binary variable and the dependent observables.
 2. Each terminal conducts a single observation.
 3. Each terminal collects information from its neighboring terminals (companions), and produces a personal posterior distribution of the latent variable.
 4. With the help of the subjective distributions, each terminal proposes the extent to which observations should be distorted.
@@ -105,22 +137,13 @@ The following steps are conducted for each loop.
 11. Each terminal updates its self-owned variables according to what has happened.
 
 &nbsp; 
-### 4) Model Parameters and Initialization
-
-_Describe and list any global parameters you will be applying in your model._
-
-_Describe how your model will be initialized_
-
-_Provide a high level, step-by-step description of your schedule during each "tick" of the model_
-
-&nbsp; 
 
 ### 5) Assessment and Outcome Measures
 
-_What quantitative metrics and/or qualitative features will you use to assess your model outcomes?_
+Accuracies of final decisions, the final bias of the supervisor, the network status in the end, how the proportion of each preference varies.
 
 &nbsp; 
 
 ### 6) Parameter Sweep
 
-_What parameters are you most interested in sweeping through? What value ranges do you expect to look at for your analysis?_
+If time permitted, I would like to sweep through different joint distributions of the latent and the observables, different patterns of interaction occurences, and different hierarchy structures (though I only present the simplest structure here).
