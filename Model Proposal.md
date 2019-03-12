@@ -1,4 +1,4 @@
-# Model Proposal for _[Project Name]_
+# Model Proposal for Information Aggregation in Simple Bureaucratic Systems
 
 _Ruikun Xiao_
 
@@ -13,12 +13,12 @@ _Ruikun Xiao_
 ### Goal 
 *****
  
-_Provide a short, 1-3 sentence description of the goal of your model_
+_This model is proposed for preliminary investigation into bottom-up information aggregation processes in bureaucratic systems._
 
 &nbsp;  
 ### Justification
 ****
-_Short explanation on why you are using ABM_
+_Modern bureaucratic systems are typical hierarchical organizations with especially heterogenous members (specialized bureaucrats, with diverged standpoints and different access to information) and complex interactional structures. Therefore, ABM is an important approach to study the collective outcomes produced._
 
 &nbsp; 
 ### Main Micro-level Processes and Macro-level Dynamics of Interest
