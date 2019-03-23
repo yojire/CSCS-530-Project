@@ -22,6 +22,9 @@ This model is proposed for preliminary investigation into bottom-up information 
 Typically, modern bureaucratic systems are hierarchical organizations with especially heterogenous members (specialized bureaucrats, with diverged standpoints and different access to information) and complex interactional structures. Therefore, ABM is an important approach to look into how they function, and how collective outcomes are produced.
 
 &nbsp; 
+
+*__LS COMMENTS:__ Solid description of goal and motivation for using ABM.*
+
 ### Main Micro-level Processes and Macro-level Dynamics of Interest
 ****
 
@@ -35,12 +38,17 @@ Finally, with all the information aggregated, a decision would be made about the
 
 &nbsp; 
 
+*__LS COMMENTS:__ Great overivew and clear explanation.*
+
 ## Model Outline
 ****
 
 Here I would only present the simplest version, where there is only one supervisor for all terminal agents. It should not be hard to extend the model.
 
 &nbsp; 
+
+*__LS COMMENTS:__ Good starting point.*
+
 ### 1) Environment
 
 For the environment, we have the network of those terminals (or we may say, companion groups). There is also a latent binary variable and a series of observables, which will all be generated every given turn.
@@ -55,6 +63,8 @@ def distortion_negotiation(groups) # Each group negotiate and reach an agreement
 ```
 
 &nbsp; 
+
+*__LS COMMENTS:__ For this model, I would say that the environment consists of the latent variable which is generating the observable information. The network structure would be a feature of the interaction topology.*
 
 ### 2) Agents
  
@@ -87,6 +97,8 @@ class terminal:
 
 &nbsp; 
 
+*__LS COMMENTS:__ A little bit more detail on some of the code here would be nice, but very good job overall. I especially like the way that you are operationalizing monitering of cheaters here in addition to "suspicion"! Good baseline specification of the terminal agents as well.*
+
 ### 3) Action and Interaction 
  
 **_Interaction Topology_**
@@ -98,7 +110,9 @@ For each step, certain numbers of random dyadic interactions between terminals o
 With penalized terminals kicked out by the supervisor, and new terminals enrolled, the network also evolves.
 
 _P.S. For simplicity, deceptions and betrayals are not considered here._
- 
+
+*__LS COMMENTS:__ Excellent!*
+
 **_Action Sequence_**
 
 Please refer to the next section.
@@ -138,6 +152,8 @@ The following steps are conducted for every given turn:
 
 &nbsp; 
 
+*__LS COMMENTS:__ Very clear!*
+
 ### 5) Assessment and Outcome Measures
 
 Accuracies of final decisions, the final bias of the supervisor, the network status in the end, how the proportion of each preference varies.
@@ -147,3 +163,5 @@ Accuracies of final decisions, the final bias of the supervisor, the network sta
 ### 6) Parameter Sweep
 
 If time permitted, I would like to sweep through different joint distributions of the latent and the observables, different patterns of interaction occurences, and different hierarchy structures (though I only present the simplest structure here).
+
+*__LS COMMENTS:__ Very well-thought out and interesting project! I look forward to seeing what you end up getting from it. 19/20*
