@@ -1,4 +1,4 @@
-term = function(id,prior=stdprior,sus_hat=0.05){
+term = function(id,prior=copy(stdprior),sus_hat=0.05){
     out = list(id=id,prior=prior, sus_hat=sus_hat)
     class(out) = c("terminal",class(out))
     return(out)
@@ -37,13 +37,14 @@ newprior = function(ls){
 
 newsus = function(ls){
     i = ls$id; s = ls$sus_hat
+    punflag = (i %in% guiltyid); coef = ifelse(punflag, 1.1, 1)
     accessible = neighbors(nw, i)%>%as.integer()
-    av_unpunished = accessible[!accessible %in% guiltyid]
-    if(length(av_unpunished)==0) return(s * jitter(1, amount=0.2))
-    susests = sapply(av_unpunished, function(i){termlist[[i]]$sus_hat}) %>% as.numeric()
-    susests = c(s, susests)
-    if(i %in% guiltyid) susests = susests[susests>=s]
-    min(susests) * jitter(1, amount=0.2)
+    av_punished = accessible[accessible %in% guiltyid]
+    if(length(av_punished)==0) return(coef * s * runif(1,0.9,1.1))
+    susests = sapply(av_punished, function(i){termlist[[i]]$sus_hat}) %>% as.numeric()
+    maxest = max(susests)
+    if(punflag) return(1.1*max(maxest,s)*runif(1,0.9,1.1))
+    runif(1,0.9,1.1) * (s + min(s,maxest))/2
 }
 
 update_term = function(){

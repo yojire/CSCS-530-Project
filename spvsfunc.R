@@ -1,4 +1,4 @@
-spvs = function(prior=stdprior, suspicion=0.05){
+spvs = function(prior=copy(stdprior), suspicion=0.05){
     out = list(suspicion=suspicion, prior=prior)
     class(out) = c("supervisor", class(out))
     return(out)

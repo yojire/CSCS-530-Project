@@ -10,12 +10,6 @@ obsgen = function(dt){
 
 addcol = function(dt, vec, name){dt[, c(name):=vec[id]];dt}
 
-addreport = function(dt, termlist){
-    repos = sapply(termlist, report)
-    dt[, report:=repos[id]]
-    dt
-}
-
 correct = function(dt, subset){dt[, report:=ifelse(rank%in%subset, y, report)];dt}
 
 newpos = function(subset, n){

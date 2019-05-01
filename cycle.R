@@ -11,11 +11,11 @@ memo[[i]] = list(
     nw = nw,
     newlink = temp[[2]],
     delink = temp[[3]],
-    sys = sys,
+    sys = copy(sys),
     repos = repos,
     decision = output,
     guilty = guilty,
     guiltyid = guiltyid,
-    supervisor = supervisor,
-    termlist = termlist
+    supervisor = copy(supervisor),
+    termlist = copy(termlist)
 )
